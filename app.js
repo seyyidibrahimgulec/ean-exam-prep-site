@@ -96,7 +96,7 @@
       '<div class="qcard"><span class="qtag">' + (catNames[q.cat] || "") + "</span>" +
       '<p class="qtext">' + q.q + '</p><div id="opts">';
     q.opts.forEach(function (o, i) {
-      html += '<button class="opt" data-i="' + i + '">' + String.fromCharCode(65 + i) + ". " + o + "</button>";
+      html += '<button class="opt" data-i="' + i + '"><span class="ol">' + String.fromCharCode(65 + i) + "</span><span>" + o + "</span></button>";
     });
     html += '</div><div id="fb"></div></div><button class="ghost-btn" id="quit">End quiz</button>';
     view.innerHTML = html;
