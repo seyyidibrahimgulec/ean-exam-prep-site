@@ -3,24 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#101418">
+<meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12151a" media="(prefers-color-scheme: dark)">
 <title>EAN RTC 2026 — Exam Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6f66'/%3E%3Cg stroke='%23fffefb' stroke-width='5' stroke-linecap='round' fill='none'%3E%3Cpath d='M24 42 L24 24 M24 24 L14 14 M24 24 L38 16 M24 42 L44 48'/%3E%3C/g%3E%3Ccircle cx='24' cy='42' r='8' fill='%23fffefb'/%3E%3Ccircle cx='14' cy='14' r='4.5' fill='%23fffefb'/%3E%3Ccircle cx='38' cy='16' r='4.5' fill='%23fffefb'/%3E%3Ccircle cx='44' cy='48' r='4.5' fill='%23fffefb'/%3E%3C/svg%3E">
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
-    <h1>🧠 EAN RTC 2026</h1>
-    <span class="subtitle">Neuroimmunology Exam Prep — Istanbul</span>
+    <svg class="logo" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#0f6f66"/><g stroke="#fffefb" stroke-width="4" stroke-linecap="round" fill="none"><path d="M24 42 L24 24 M24 24 L14 14 M24 24 L38 16 M24 42 L44 48"/></g><circle cx="24" cy="42" r="7" fill="#fffefb"/><circle cx="14" cy="14" r="3.5" fill="#fffefb"/><circle cx="38" cy="16" r="3.5" fill="#fffefb"/><circle cx="44" cy="48" r="3.5" fill="#fffefb"/></svg>
+    <div class="topbar-text">
+      <h1>EAN RTC 2026</h1>
+      <span class="subtitle">Neuroimmunology · Exam Prep · Istanbul</span>
+    </div>
   </div>
 </header>
 
 <main id="view" class="view"></main>
 
 <nav class="tabbar" aria-label="Sections">
-  <button class="tab active" data-tab="cheat">📋 Cheat Sheet</button>
-  <button class="tab" data-tab="quiz">✅ Quiz</button>
+  <button class="tab active" data-tab="cheat">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5 A2 2 0 0 1 6 3 H20 V19 H6 A2 2 0 0 0 4 21 Z"/><path d="M4 5 V21"/><path d="M9 8 H15 M9 12 H15"/></svg>
+    Cheat Sheet
+  </button>
+  <button class="tab" data-tab="quiz">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5 L11 15.5 L16 9.5"/></svg>
+    Quiz
+  </button>
 </nav>
 
 <script src="data.js"></script>

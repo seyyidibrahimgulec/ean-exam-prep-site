@@ -2,7 +2,8 @@
 (function () {
   var view = document.getElementById("view");
   var tabs = document.querySelectorAll(".tab");
-  var state = { tab: "cheat", quiz: null, search: "" };
+  var state = { tab: "cheat", quiz: null, search: "", day: null };
+  var DAY_CHIPS = ["Day 1 · MS", "Day 2 · NMOSD", "Day 3 · Encephalitis"];
 
   tabs.forEach(function (t) {
     t.addEventListener("click", function () {
@@ -20,8 +21,18 @@
   /* ---------- cheat sheet ---------- */
   function renderCheat() {
     var q = state.search.trim().toLowerCase();
-    var html = '<input class="search" type="search" placeholder="Search… (e.g. MOG, kappa, NfL, LGI1)" value="' + esc(state.search) + '">';
-    CHEAT.forEach(function (day) {
+    var html = '<div class="chips">';
+    DAY_CHIPS.forEach(function (label, i) {
+      html += '<button class="chip' + (state.day === i ? " active" : "") + '" data-day="' + i + '">' + label + "</button>";
+    });
+    html += "</div>";
+    html +=
+      '<div class="searchwrap">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20 L16.5 16.5"/></svg>' +
+      '<input class="search" type="search" placeholder="Search — MOG, kappa, NfL, LGI1…" value="' + esc(state.search) + '">' +
+      "</div>";
+    CHEAT.forEach(function (day, di) {
+      if (state.day !== null && state.day !== di) return;
       var topics = day.topics.filter(function (t) {
         if (!q) return true;
         return (t.title + " " + t.html).toLowerCase().indexOf(q) !== -1;
@@ -35,6 +46,13 @@
       html += "</section>";
     });
     view.innerHTML = html;
+    view.querySelectorAll(".chip").forEach(function (c) {
+      c.addEventListener("click", function () {
+        var d = parseInt(c.dataset.day, 10);
+        state.day = state.day === d ? null : d;
+        renderCheat();
+      });
+    });
     var input = view.querySelector(".search");
     input.addEventListener("input", function () {
       state.search = input.value;
@@ -65,10 +83,10 @@
 
   function renderQuizSetup() {
     var cats = [
-      { id: "all", label: "🎲 All questions (mixed)" },
-      { id: "ms", label: "🧠 Day 1 — MS: biomarkers & imaging" },
-      { id: "nmosd", label: "👁️ Day 2 — NMOSD, MOGAD & AQP4" },
-      { id: "ae", label: "🔬 Day 3 — Autoimmune & paraneoplastic encephalitis" }
+      { id: "all", label: "All questions (mixed)" },
+      { id: "ms", label: "Day 1 — MS: biomarkers & imaging" },
+      { id: "nmosd", label: "Day 2 — NMOSD, MOGAD & AQP4" },
+      { id: "ae", label: "Day 3 — Autoimmune & paraneoplastic encephalitis" }
     ];
     var best = localStorage.getItem("ean-best");
     var html = '<div class="quiz-setup"><p class="intro">Pick a question set. Instant feedback after each answer, with an explanation.' +
@@ -136,14 +154,15 @@
   function renderResult() {
     var qz = state.quiz;
     var pct = Math.round(100 * qz.score / qz.qs.length);
-    var emoji = pct >= 80 ? "🏆" : pct >= 60 ? "👍" : "📚";
     var prev = parseInt(localStorage.getItem("ean-best-pct") || "0", 10);
     if (pct > prev) {
       localStorage.setItem("ean-best-pct", String(pct));
       localStorage.setItem("ean-best", qz.score + "/" + qz.qs.length + " (" + pct + "%)");
     }
+    var ringColor = pct >= 80 ? "var(--good)" : pct >= 60 ? "var(--accent)" : "var(--bad)";
     view.innerHTML =
-      '<div class="result"><div class="big">' + emoji + "</div>" +
+      '<div class="result"><div class="big" style="color:' + ringColor + '">' +
+      '<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.5 L10.7 15.7 L16.5 9.5"/></svg></div>' +
       "<h2>" + qz.score + " / " + qz.qs.length + " (" + pct + "%)</h2>" +
       "<p>" + (pct >= 80 ? "Excellent — you are ready." : pct >= 60 ? "Good — review the missed topics in the cheat sheet." : "Go over the cheat sheet once more, then retry.") + "</p>" +
       '<button class="primary-btn" id="again">Try again</button>' +
